@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MK Luxury Bags</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#0f0f0f;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    body::-webkit-scrollbar{
+      width:8px;
+    }
+
+    body::-webkit-scrollbar-thumb{
+      background:#c9a86a;
+      border-radius:20px;
+    }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      padding:20px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:1000;
+      background:rgba(0,0,0,0.4);
+      backdrop-filter:blur(10px);
+      transition:0.4s;
+    }
+
+    header.active{
+      background:#000;
+      box-shadow:0 5px 20px rgba(0,0,0,0.5);
+    }
+
+    .logo{
+      font-size:32px;
+      font-weight:700;
+      letter-spacing:3px;
+    }
+
+    .logo span{
+      color:#c9a86a;
+    }
+
+    nav{
+      display:flex;
+      gap:35px;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      position:relative;
+      transition:0.3s;
+    }
+
+    nav a::after{
+      content:'';
+      position:absolute;
+      width:0;
+      height:2px;
+      background:#c9a86a;
+      left:0;
+      bottom:-6px;
+      transition:0.3s;
+    }
+
+    nav a:hover::after{
+      width:100%;
+    }
+
+    .menu-btn{
+      display:none;
+      font-size:30px;
+      cursor:pointer;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:120px 8% 80px;
+      background:linear-gradient(to right,#000,#181818);
+      gap:50px;
+    }
+
+    .hero-text{
+      max-width:600px;
+    }
+
+    .hero-text h1{
+      font-size:70px;
+      line-height:1.1;
+      margin-bottom:20px;
+    }
+
+    .hero-text span{
+      color:#c9a86a;
+    }
+
+    .hero-text p{
+      color:#ccc;
+      line-height:1.9;
+      margin-bottom:30px;
+    }
+
+    .hero-btns{
+      display:flex;
+      gap:20px;
+    }
+
+    .btn{
+      padding:14px 32px;
+      border-radius:50px;
+      text-decoration:none;
+      transition:0.4s;
+      font-weight:600;
+    }
+
+    .gold{
+      background:#c9a86a;
+      color:#111;
+    }
+
+    .dark{
+      border:1px solid #444;
+      color:white;
+    }
+
+    .btn:hover{
+      transform:translateY(-4px);
+    }
+
+    .hero-image img{
+      width:100%;
+      max-width:500px;
+      border-radius:30px;
+      animation:float 4s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(-15px);
+      }
+    }
+
+    section{
+      padding:100px 8%;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:46px;
+      margin-bottom:15px;
+    }
+
+    .section-title p{
+      color:#aaa;
+      max-width:700px;
+      margin:auto;
+      line-height:1.8;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:#171717;
+      border-radius:28px;
+      overflow:hidden;
+      transition:0.4s;
+      border:1px solid rgba(255,255,255,0.05);
+      position:relative;
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .card img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+    }
+
+    .badge{
+      position:absolute;
+      top:20px;
+      right:20px;
+      background:#c9a86a;
+      color:#111;
+      padding:8px 15px;
+      border-radius:50px;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .card-content{
+      padding:24px;
+    }
+
+    .card-content h3{
+      font-size:25px;
+      margin-bottom:10px;
+    }
+
+    .card-content p{
+      color:#bbb;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    .options label{
+      color:#ddd;
+      font-size:14px;
+    }
+
+    .options select{
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      background:#222;
+      color:white;
+      outline:none;
+    }
+
+    .price-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .price{
+      color:#c9a86a;
+      font-size:24px;
+      font-weight:700;
+    }
+
+    .cart-btn{
+      background:#c9a86a;
+      color:#111;
+      border:none;
+      padding:12px 20px;
+      border-radius:50px;
+      cursor:pointer;
+      font-weight:600;
+      transition:0.4s;
+    }
+
+    .cart-btn:hover{
+      transform:scale(1.05);
+    }
+
+    .banner{
+      background:linear-gradient(135deg,#c9a86a,#8a6837);
+      border-radius:35px;
+      padding:70px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .banner h2{
+      font-size:50px;
+      color:#111;
+      margin-bottom:10px;
+    }
+
+    .banner p{
+      color:#222;
+      line-height:1.8;
+      max-width:600px;
+    }
+
+    .banner .btn{
+      background:#111;
+      color:white;
+    }
+
+    .about{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:50px;
+      align-items:center;
+    }
+
+    .about img{
+      width:100%;
+      border-radius:30px;
+    }
+
+    .about-text h2{
+      font-size:46px;
+      margin-bottom:20px;
+    }
+
+    .about-text p{
+      color:#bbb;
+      line-height:1.9;
+      margin-bottom:20px;
+    }
+
+    .stats{
+      display:flex;
+      gap:30px;
+      flex-wrap:wrap;
+      margin-top:30px;
+    }
+
+    .stat h3{
+      color:#c9a86a;
+      font-size:34px;
+    }
+
+    .stat span{
+      color:#bbb;
+    }
+
+    footer{
+      padding:40px;
+      text-align:center;
+      border-top:1px solid rgba(255,255,255,0.08);
+      color:#aaa;
+    }
+
+    .cart-popup{
+      position:fixed;
+      right:-400px;
+      bottom:30px;
+      background:#1a1a1a;
+      padding:20px 25px;
+      border-radius:20px;
+      transition:0.5s;
+      z-index:9999;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .cart-popup.show{
+      right:30px;
+    }
+
+    .cart-popup h4{
+      color:#c9a86a;
+      margin-bottom:10px;
+    }
+
+    @media(max-width:980px){
+
+      .hero{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .hero-text h1{
+        font-size:50px;
+      }
+
+      nav{
+        position:absolute;
+        top:100%;
+        right:-100%;
+        width:250px;
+        height:100vh;
+        background:#111;
+        flex-direction:column;
+        padding:60px 30px;
+        transition:0.4s;
+      }
+
+      nav.active{
+        right:0;
+      }
+
+      .menu-btn{
+        display:block;
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .hero-text h1{
+        font-size:40px;
+      }
+
+      .section-title h2,
+      .about-text h2,
+      .banner h2{
+        font-size:34px;
+      }
+
+      .banner{
+        padding:40px 25px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">M<span>K</span></div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#collection">Collection</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="menu-btn">☰</div>
+</header>
+
+<section class="hero" id="home">
+
+  <div class="hero-text">
+    <h1>Luxury Bags For <span>Modern Elegance</span></h1>
+
+    <p>
+      Discover timeless handcrafted bags designed for elegance, confidence, and luxury.
+      Elevate your style with premium fashion accessories inspired by modern beauty.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#collection" class="btn gold">Shop Now</a>
+      <a href="#about" class="btn dark">Learn More</a>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="images/bag4.png" alt="bag">
+  </div>
+
+</section>
+
+<section id="collection">
+
+  <div class="section-title">
+    <h2>Exclusive Collection</h2>
+    <p>Premium bags crafted with luxurious materials and minimalist modern fashion.</p>
+  </div>
+
+  <div class="products">
+
+    <div class="card product-card">
+      <span class="badge">HOT</span>
+
+      <img src="images/bag6.png" alt="bag">
+
+      <div class="card-content">
+        <h3>Arabian horse</h3>
+        <p>Premium luxury leather handbag with elegant modern design.</p>
+
+        <div class="options">
+          <label>Choose Color</label>
+          <select class="color-select">
+            <option>Black</option>
+            <option>Brown</option>
+            <option>White</option>
+          
+          </select>
+
+          <label>Choose Size</label>
+          <select class="size-select">
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+          </select>
+        </div>
+
+        <div class="price-row">
+          <div class="price">$289</div>
+          <button class="cart-btn">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card product-card">
+      <span class="badge">NEW</span>
+
+      <img src="images/bag2.png" alt="bag">
+
+      <div class="card-content">
+        <h3>Dark nightmares</h3>
+        <p>Luxury fashion bag designed for classy and modern outfits.</p>
+
+        <div class="options">
+          <label>Choose Color</label>
+          <select class="color-select">
+            <option>Gold</option>
+            <option>Beige</option>
+            <option>Black</option>
+          </select>
+
+          <label>Choose Size</label>
+          <select class="size-select">
+            <option>Mini</option>
+            <option>Medium</option>
+            <option>XL</option>
+          </select>
+        </div>
+
+        <div class="price-row">
+          <div class="price">$349</div>
+          <button class="cart-btn">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card product-card">
+      <span class="badge">LUXE</span>
+
+      <img src="images/bag1.png" alt="bag">
+
+      <div class="card-content">
+        <h3>cherry Wine </h3>
+        <p>Luxury designer bag crafted with premium materials and style.</p>
+
+        <div class="options">
+          <label>Choose Color</label>
+          <select class="color-select">
+            <option>Gold</option>
+            <option>Black</option>
+            <option>Silver</option>
+          </select>
+
+          <label>Choose Size</label>
+          <select class="size-select">
+            <option>Mini</option>
+            <option>Medium</option>
+            <option>Large</option>
+          </select>
+        </div>
+
+        <div class="price-row">
+          <div class="price">$329</div>
+          <button class="cart-btn">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section>
+  <div class="banner">
+
+    <div>
+      <h2>Summer Luxury Sale</h2>
+      <p>
+        Enjoy exclusive offers on our latest luxury bag collection and elevate your fashion style.
+      </p>
+    </div>
+
+    <a href="#collection" class="btn">Explore Collection</a>
+
+  </div>
+</section>
+
+<section id="about">
+
+  <div class="about">
+
+    <img src="images/bag3.png" alt="about">
+
+    <div class="about-text">
+
+      <h2>Designed For Luxury Lovers</h2>
+
+      <p>
+        MK combines elegance, simplicity, and premium craftsmanship to create modern bags for confident women.
+      </p>
+
+      <p>
+        Every detail is carefully designed to deliver timeless beauty and a luxury experience.
+      </p>
+
+      <div class="stats">
+
+        <div class="stat">
+          <h3>20K+</h3>
+          <span>Customers</span>
+        </div>
+
+        <div class="stat">
+          <h3>120+</h3>
+          <span>Luxury Products</span>
+        </div>
+
+        <div class="stat">
+          <h3>4.9</h3>
+          <span>Rating</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer id="contact">
+  <p>© 2026 MK Luxury Bags — All Rights Reserved</p>
+</footer>
+
+<div class="cart-popup">
+  <h4>Product Added</h4>
+  <p class="popup-text"></p>
+</div>
+
+
+
+
+<script>
+
+$(window).on('scroll', function(){
+
+  if($(window).scrollTop() > 50){
+    $('header').addClass('active');
+  }
+
+  else{
+    $('header').removeClass('active');
+  }
+
+});
+
+$('.menu-btn').click(function(){
+  $('nav').toggleClass('active');
+});
+
+$('.cart-btn').click(function(){
+
+  let card = $(this).closest('.product-card');
+
+  let title = card.find('h3').text();
+  let color = card.find('.color-select').val();
+  let size = card.find('.size-select').val();
+  let price = card.find('.price').text();
+
+  $('.popup-text').html(
+    title + '<br>' +
+    'Color: ' + color + '<br>' +
+    'Size: ' + size + '<br>' +
+    'Price: ' + price
+  );
+
+  $('.cart-popup').addClass('show');
+
+  setTimeout(function(){
+    $('.cart-popup').removeClass('show');
+  },3000);
+
+});
+
+$('.color-select').change(function(){
+
+  let selected = $(this).val();
+
+  if(selected == 'Black'){
+    $(this).css('border','2px solid #000');
+  }
+
+  else if(selected == 'Brown'){
+    $(this).css('border','2px solid brown');
+  }
+
+  else if(selected == 'White'){
+    $(this).css('border','2px solid white');
+  }
+
+  else if(selected == 'Gold'){
+    $(this).css('border','2px solid gold');
+  }
+
+  else{
+    $(this).css('border','2px solid #c9a86a');
+  }
+
+});
+
+</script>
+
+</body>
+</html>
